@@ -2,10 +2,6 @@ i.icon {
     font-size: 2em;
 }
 
-.container {
-    margin-top: 0.7em;
-}
-
-body{
-    background-color: red; 
+div.ui.main.text.container.segment{
+    margin-top: 10em;
 }

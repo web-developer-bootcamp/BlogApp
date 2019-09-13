@@ -42,6 +42,19 @@ app.get("/blogs/new", function (req, res) {
     res.render("new");
 });
 
+app.post("/blogs", function (req, res) {
+    var blog = req.body.blog;
+
+    Blog.create(blog, function(err, newBlog){
+        if(err){
+            console.log(err)
+            res.render("new");
+        } else {
+            res.redirect("/blogs");
+        }
+    });
+});
+
 app.get("/", (req, res) => res.redirect("blogs"));
 
 app.listen(3000, () => console.log("Blog Server is started!"))

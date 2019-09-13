@@ -21,11 +21,11 @@ var blogSchema = new mongoose.Schema({
 });
 var Blog = mongoose.model("Blog", blogSchema);
 
-//Blog.create({
-//title: "Test Blog",
-//image: "https://cdn.pixabay.com/photo/2015/03/26/09/54/pug-690566_960_720.jpg",
-//body: "Hello dog post!"
-//});
+// Blog.create({
+// title: "Test Blog",
+// image: "https://cdn.pixabay.com/photo/2015/03/26/09/54/pug-690566_960_720.jpg",
+// body: "Hello dog post!"
+// });
 
 //Restful routes
 app.get("/blogs", function (req, res) {
@@ -38,15 +38,17 @@ app.get("/blogs", function (req, res) {
     });
 });
 
+//From page
 app.get("/blogs/new", function (req, res) {
     res.render("new");
 });
 
+//Create new blog
 app.post("/blogs", function (req, res) {
     var blog = req.body.blog;
 
-    Blog.create(blog, function(err, newBlog){
-        if(err){
+    Blog.create(blog, function (err, newBlog) {
+        if (err) {
             console.log(err)
             res.render("new");
         } else {
@@ -55,6 +57,20 @@ app.post("/blogs", function (req, res) {
     });
 });
 
+//Show
+app.get("/blogs/:id", function (req, res) {
+    var id = req.params.id;
+    Blog.findById(id, function (err, foundBlog) {
+        if (err) {
+            console.log(err);
+            res.redirect("/blogs");
+        } else {
+            res.render("show", { blog: foundBlog });
+        }
+    });
+});
+
+
 app.get("/", (req, res) => res.redirect("blogs"));
 
-app.listen(3000, () => console.log("Blog Server is started!"))
+app.listen(3000, () => console.log("Blog Server is started!"));

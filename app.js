@@ -49,8 +49,7 @@ app.get("/blogs/new", function (req, res) {
 
 //Create new blog
 app.post("/blogs", function (req, res) {
-    req.body.blog.body
-
+    req.body.blog.body = req.sanitize(req.body.blog.body)
     var blog = req.body.blog;
     Blog.create(blog, function (err, newBlog) {
         if (err) {
@@ -87,6 +86,7 @@ app.get("/blogs/:id/edit", function (req, res) {
 
 //Update route
 app.put("/blogs/:id", function (req, res) {
+    req.body.blog.body = req.sanitize(req.body.blog.body)
     var id = req.params.id;
     var newData = req.body.blog;
     Blog.findByIdAndUpdate(id, newData, function (err, updatedBlog) {
